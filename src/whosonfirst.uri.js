@@ -65,7 +65,7 @@ whosonfirst.uri = (function(){
 		if (args["source"]){
 		    
 		    // to do: validate source here
-		    // to do: actually write mapzen.whosonfirst.source.js
+		    // to do: actually write whosonfirst.source.js
 		    // (20161130/thisisaaronland)
 		    
 		    var source = encodeURIComponent(args["source"]);
