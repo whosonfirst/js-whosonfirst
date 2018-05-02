@@ -2,106 +2,116 @@ var whosonfirst = whosonfirst || {};
 
 whosonfirst.uri = (function(){
 	
-	var _endpoint = "https://data.whosonfirst.org/";
+    var _endpoint = "https://data.whosonfirst.org/";
 	
-	var self = {
+    var self = {
+	
+	'endpoint': function(e){
 	    
-	    'endpoint': function(e){
-		
-		if (e){
-		    mapzen.whosonfirst.log.info("set uri endpoint to " + e);
-		    _endpoint = e;
-		}
-		
-		return _endpoint;
-	    },
+	    if (e){
+		self.log("info","set uri endpoint to " + e);
+		_endpoint = e;
+	    }
 	    
-	    'id2abspath': function (id, args){
-		
-		var rel_path = self.id2relpath(id, args);
-		var abs_path = self.endpoint() + rel_path;
-		
-		return abs_path;
-	    },
+	    return _endpoint;
+	},
+	
+	'id2abspath': function (id, args){
 	    
-	    'id2relpath': function(id, args){
-		
-		parent = self.id2parent(id);
-		fname = self.id2fname(id, args);
-		
-		var rel_path = parent + "/" + fname;
-		return rel_path;
-	    },
+	    var rel_path = self.id2relpath(id, args);
+	    var abs_path = self.endpoint() + rel_path;
 	    
-	    'id2parent': function(id){
+	    return abs_path;
+	},
+	
+	'id2relpath': function(id, args){
+	    
+	    parent = self.id2parent(id);
+	    fname = self.id2fname(id, args);
+	    
+	    var rel_path = parent + "/" + fname;
+	    return rel_path;
+	},
+	
+	'id2parent': function(id){
+	    
+	    str_id = new String(id);
+	    tmp = new Array();
+	    
+	    while (str_id.length){
 		
-		str_id = new String(id);
-		tmp = new Array();
+		var part = str_id.substr(0, 3);
+		tmp.push(part);
+		str_id = str_id.substr(3);
+	    }
+	    
+	    parent = tmp.join("/");
+	    return parent;
+	},
+	
+	'id2fname': function(id, args){
+	    
+	    if (! args){
+		args = {};
+	    }
+	    
+	    var fname = [
+		encodeURIComponent(id)
+	    ];
+	    
+	    if (args["alt"]) {
+		fname.push('alt');
 		
-		while (str_id.length){
+		if (args["source"]){
 		    
-		    var part = str_id.substr(0, 3);
-		    tmp.push(part);
-		    str_id = str_id.substr(3);
-		}
-		
-		parent = tmp.join("/");
-		return parent;
-	    },
-	    
-	    'id2fname': function(id, args){
-		
-		if (! args){
-		    args = {};
-		}
-		
-		var fname = [
-			     encodeURIComponent(id)
-			     ];
-		
-		if (args["alt"]) {
-		    fname.push('alt');
+		    // to do: validate source here
+		    // to do: actually write mapzen.whosonfirst.source.js
+		    // (20161130/thisisaaronland)
 		    
-		    if (args["source"]){
+		    var source = encodeURIComponent(args["source"]);
+		    fname.push(source);
+		    
+		    if (args["function"]){
 			
-			// to do: validate source here
-			// to do: actually write mapzen.whosonfirst.source.js
-			// (20161130/thisisaaronland)
+			var func = encodeURIComponent(args["function"]);
+			fname.push(func);
 			
-			var source = encodeURIComponent(args["source"]);
-			fname.push(source);
-			
-			if (args["function"]){
+			if ((args["extras"]) && (args["extras"].join)){
 			    
-			    var func = encodeURIComponent(args["function"]);
-			    fname.push(func);
+			    var extras = args["extras"];
+			    var count = extras.length;
 			    
-			    if ((args["extras"]) && (args["extras"].join)){
-				
-				var extras = args["extras"];
-				var count = extras.length;
-				
-				for (var i = 0; i < count; i++){
-				    var extra = encodeURIComponent(extras[i]);
-				    fname.push(extra);
-				}
+			    for (var i = 0; i < count; i++){
+				var extra = encodeURIComponent(extras[i]);
+				fname.push(extra);
 			    }
 			}
 		    }
-		    
-		    else {
-			console.log("missing source parameter for alternate geometry");
-			fname.push("unknown");
-		    }
-		    
 		}
 		
-		var str_fname = fname.join("-");
+		else {
+		    console.log("missing source parameter for alternate geometry");
+		    fname.push("unknown");
+		}
 		
-		return str_fname + ".geojson";
 	    }
-	};
+	    
+	    var str_fname = fname.join("-");
+	    return str_fname + ".geojson";
+	},
 	
-	return self;
-
+	'log': function(level, message){
+	    
+	    if (typeof(whosonfirst.log) != object){
+		console.log(level, message);
+		return;
+	    }
+	    
+	    whosonfirst.log.dispatch(message, level);
+	}
+	
+    };
+    
+    return self;
+    
 })();
