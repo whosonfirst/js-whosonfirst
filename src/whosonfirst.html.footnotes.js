@@ -1,5 +1,5 @@
 var whosonfirst = whosonfirst || {};
-whosonfirst.html = mapzen.html || {};
+whosonfirst.html = whosonfirst.html || {};
 
 whosonfirst.html.footnotes = (function() {
 
