@@ -3,7 +3,52 @@ var whosonfirst = whosonfirst || {};
 whosonfirst.geojson = (function(){
 
 	var self = {
+
+	    'derive_bbox_as_feature': function(geojson){
+
+		var poly = self.derive_bbox_as_polygon(geojson);
+		var geom = { 'type': 'Polygon', 'coordinates': poly };
+		var props = geojson['properties'];
+
+		var feature = { 'type': 'Feature', 'properties': props, 'geometry': geom };
+		return feature;
+	    },
+
+	    derive_bbox_as_bounds: function(geojson){
+
+		var bbox = self.derive_bbox(geojson);
+		
+		var swlon = bbox[0];
+		var swlat = bbox[1];
+		var nelon = bbox[2];
+		var nelat = bbox[3];
+
+		return [
+		    [ swlat, swlon ],
+		    [ nelat, nelon ],
+		];
+	    },
 	    
+	    'derive_bbox_as_polygon': function(geojson){
+
+		var bbox = self.derive_bbox(geojson);
+		
+		var swlon = bbox[0];
+		var swlat = bbox[1];
+		var nelon = bbox[2];
+		var nelat = bbox[3];
+		
+		var poly = [[
+		    [swlon, swlat],
+		    [swlon, nelat],
+		    [nelon, nelat],
+		    [nelon, swlat],
+		    [swlon, swlat],
+		]];
+		
+		return poly;
+	    },
+
 	    'derive_bbox': function(geojson){
 		
 		if (geojson['bbox']){

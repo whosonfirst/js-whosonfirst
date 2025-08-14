@@ -1,10 +1,9 @@
 MINIFY=minify
 
-namify:
+compile:
 	mkdir -p dist
-	$(MINIFY) -b -o dist/whosonfirst.namify.bundle.min.js \
-		src/whosonfirst.php.js \
-		src/whosonfirst.log.js \
-		src/whosonfirst.net.js \
+	$(MINIFY) -b -o dist/whosonfirst.min.js \
+		ext/localforage.js \
 		src/whosonfirst.uri.js \
-		src/whosonfirst.html.namify.js
+		src/whosonfirst.data.js \
+		src/whosonfirst.geojson.js
