@@ -2,6 +2,16 @@
 
 JavaScript libraries for working with Who's On First data.
 
-## Important
+## Packages
 
-This is work in progress and will superseded the [js-mapzen-whosonfirst](https://github.com/whosonfirst/js-mapzen-whosonfirst) repository.
+### whosonfirst.data
+
+### whosonfirst.flags
+
+### whosonfirst.geojson
+
+### whosonfirst.namify
+
+### whosonfirst.placetypes
+
+### whosonfirst.uri

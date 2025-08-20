@@ -5,6 +5,34 @@ whosonfirst.data = (function(){
     var default_cache_ttl = 30000; // ms
     
     var self = {
+
+	fetchWithEndpoints: function(endpoints, rel_path, args) {
+
+	    return new Promise((resolve, reject) => {
+
+		(async () => {
+		    const count = endpoints.length;
+		    
+		    for (var i=0; i < count; i++){
+
+			const endpoint = endpoints[i];
+			const uri = endpoint + rel_path;
+			console.debug("Fetch with endpoint", endpoint, rel_path);
+			
+			try {
+			    const rsp = await self.fetch(uri, args);
+			    resolve({"data": rsp, "endpoint": endpoint});
+			    return;
+			} catch (err) {
+			    console.error("Failed to fetch", uri, err);
+			}
+		    }
+		    
+		    reject(new Error('All fetch attempts failed'));
+		})();
+		
+	    });
+	},
 	
 	fetch: function(url, args){
 	    

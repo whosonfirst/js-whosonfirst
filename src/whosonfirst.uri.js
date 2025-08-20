@@ -9,7 +9,7 @@ whosonfirst.uri = (function(){
 	'endpoint': function(e){
 
 	    if (e){
-		self.log("info","set uri endpoint to " + e);
+		console.log("set uri endpoint to " + e);
 		_endpoint = e;
 	    }
 	    
@@ -99,16 +99,6 @@ whosonfirst.uri = (function(){
 	    var str_fname = fname.join("-");
 	    return str_fname + ".geojson";
 	},
-	
-	'log': function(level, message){
-	    
-	    if (typeof(whosonfirst.log) != 'object'){
-		console.log(level, message);
-		return;
-	    }
-	    
-	    whosonfirst.log.dispatch(message, level);
-	}
 	
     };
     

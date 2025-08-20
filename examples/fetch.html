@@ -1,0 +1,38 @@
+<html>
+    <head>
+	<title>Fetch example</title>
+    </head>
+    <body>
+	<div>
+	    <h1>Fetch with endpoints</h1>
+	    <label id="fetch-endpoints-label"></label>
+	    <pre id="fetch-endpoints-data">
+	    </pre>
+	</div>
+	<script type="text/javascript" src="../src/whosonfirst.uri.js"></script>
+	<script type="text/javascript" src="../src/whosonfirst.uri.init.js"></script>
+	<script type="text/javascript" src="../src/whosonfirst.data.js"></script>	
+	<script type="text/javascript">
+	 
+	 const id = 101909779;
+	 const rel_path = whosonfirst.uri.id2relpath(id);
+	 
+	 const endpoints = [
+	     "https://static.sfomuseum.org/geojson/",
+	     "https://data.whosonfirst.org/",
+	 ];
+	 
+	 whosonfirst.data.fetchWithEndpoints(endpoints, id).then((rsp) => {
+
+	     const label_el = document.getElementById("fetch-endpoints-label");	     
+	     const pre_el = document.getElementById("fetch-endpoints-data");
+
+	     label_el.innerText = "Data retrieved from " + rsp.endpoint;
+	     pre_el.innerText = JSON.stringify(rsp.data, null, 2);
+	 }).catch((err) => {
+	     console.error(err);
+	 });
+	 
+	</script>
+    </body>
+</html>
