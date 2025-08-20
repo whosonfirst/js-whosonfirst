@@ -6,4 +6,5 @@ compile:
 		ext/localforage.js \
 		src/whosonfirst.uri.js \
 		src/whosonfirst.data.js \
+		src/whosonfirst.namify.js \
 		src/whosonfirst.geojson.js
