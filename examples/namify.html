@@ -3,16 +3,38 @@
 	<title>Namify example</title>
     </head>
     <body>
+	<h1>Namify</h1>
 	<ul>
 	    <li><code>102527513</code> <span class="wof-namify" data-wof-id="102527513">102527513</span></li>
 	    <li><code>101736545</code> <span class="wof-namify" data-wof-id="101736545">101736545</span></li>	    
 	</ul>
+
+	<h1>Namify (with options)</h1>
+	<ul>
+	    <li><code>102527513</code> <span class="wof-namify-2" data-wof-id="102527513">102527513</span></li>
+	    <li><code>101736545</code> <span class="wof-namify-2" data-wof-id="101736545">101736545</span></li>
+	    <li><code>101909779</code> <span class="wof-namify-2" data-wof-id="101909779">101909779</span></li>	    	    
+	</ul>
+	
 	<script type="text/javascript" src="../src/whosonfirst.uri.js"></script>
 	<script type="text/javascript" src="../src/whosonfirst.uri.init.js"></script>
 	<script type="text/javascript" src="../src/whosonfirst.data.js"></script>
 	<script type="text/javascript" src="../src/whosonfirst.namify.js"></script>
 	<script type="text/javascript">
-	    whosonfirst.namify.namify();
+	 whosonfirst.namify.namify();
+
+	 const endpoints = [
+	     "https://static.sfomuseum.org/geojson/",
+	     "https://data.whosonfirst.org/",
+	 ];
+
+	 const opts = {
+	     className: "wof-namify-2",
+	     endpoints: endpoints,
+	 };
+	 
+	 whosonfirst.namify.namifyWithOptions(opts);
+	 
 	</script>
     </body>
 </html>

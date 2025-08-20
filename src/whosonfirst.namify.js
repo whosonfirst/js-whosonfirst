@@ -5,12 +5,16 @@ whosonfirst.namify = (function(){
     var self = {
 
 	namify: function(){
-	    return self.namifyWithClassName("wof-namify");
+	    return self.namifyWithOptions({className: "wof-namify"});
 	},
 
-	namifyWithClassName: function(class_name){	
+	namifyWithEndpoints: function(endpoints){
+	    return self.namifyWithOptions({className: "wof-namify", endpoints: endpoints});
+	},
+	
+	namifyWithOptions: function(opts){	
 	    
-	    var els = document.getElementsByClassName(class_name);
+	    var els = document.getElementsByClassName(opts.className);
 	    var count = els.length;
 
 	    for (var i=0; i < count; i++){
@@ -28,16 +32,34 @@ whosonfirst.namify = (function(){
 		    console.debug("Element has different text value than data-wof-id attribute, skipping.");
 		    continue;
 		}
+
+		const on_success = function(f){
+		    const name = f.properties["wof:name"];
+		    el.innerText = name;		    
+		};
 		
-		const uri = whosonfirst.uri.id2abspath(str_id);
-		whosonfirst.data.fetch(uri).then((rsp) => {
+		if (opts.endpoints){
+
+		    const rel_path = whosonfirst.uri.id2relpath(str_id);
 		    
-		    const name = rsp.properties["wof:name"];
-		    el.innerText = name;
+		    whosonfirst.data.fetchWithEndpoints(opts.endpoints, rel_path).then((rsp) => {
+			on_success(rsp.data);
+		    }).catch((err) => {
+			console.error("Failed to fetch data for ", str_id, err)
+		    });
 		    
-		}).catch((err) => {
-		    console.error("Failed to fetch data for ", str_id, err)
-		});
+		} else {
+
+		    const uri = whosonfirst.uri.id2abspath(str_id);
+		    
+		    whosonfirst.data.fetch(uri).then((rsp) => {
+			on_success(rsp);
+		    }).catch((err) => {
+			console.error("Failed to fetch data for ", str_id, err)
+		    });
+		    
+		}
+		
 	    }
 	},
 	
