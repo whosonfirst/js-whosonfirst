@@ -1,3 +1,7 @@
+/**
+ * @namespace whosonfirst.namify
+ */
+
 var whosonfirst = whosonfirst || {};
 
 whosonfirst.namify = (function(){

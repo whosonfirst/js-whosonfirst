@@ -1,3 +1,11 @@
+/**
+ * @namespace whosonfirst.flags
+ */
+
+/**
+ * @namespace whosonfirst.flags.existential
+ */
+
 var whosonfirst = whosonfirst || {};
 whosonfirst.flags = whosonfirst.flags || {};
 

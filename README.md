@@ -20,19 +20,9 @@ minify -b -o dist/whosonfirst.min.js \
 
 _Note: This assumes you have installed the [tdwolff/minify](https://github.com/tdewolff/minify) binary._
 
-## Packages
+## Documentation
 
-### whosonfirst.data
-
-### whosonfirst.flags
-
-### whosonfirst.geojson
-
-### whosonfirst.namify
-
-### whosonfirst.placetypes
-
-### whosonfirst.uri
+Consult the [docs](docs) folder.
 
 ## Examples
 
