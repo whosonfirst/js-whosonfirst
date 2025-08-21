@@ -19,9 +19,9 @@ whosonfirst.data = (function(){
 	 */
 	   
 	/**
-	 * Fetch the body of a Who's On First record from a set of endpoints, returning data
+	 * @function whosonfirst.data.fetchWithEndpoints
+	 * @description Fetch the body of a Who's On First record from a set of endpoints, returning data
 	 * for the first successful response..
-	 *
 	 * @param {string[]} endpoints - A list of endpoints to query.
 	 * @param {number} rel_path - The relative path of the Who's On First document to fetch.
 	 * @params {fetchArgs} args - Optionals arguments for fetching records.
@@ -56,8 +56,8 @@ whosonfirst.data = (function(){
 	},
 
 	/**
-	 * Fetch the body of a Who's On First record.
-	 *
+	 * @function whosonfirst.data.fetch
+	 * @description Fetch the body of a Who's On First record.
 	 * @param {string} uri - The absolute URI of the Who's On First document to fetch.
 	 * @params {fetchArgs} args - Optionals arguments for fetching records.
 	 * @returns {Promise.<Object>} The body the Who's On First record.
