@@ -13,8 +13,8 @@ whosonfirst.data = (function(){
 	/**
 	 * @typedef {Object} fetchWithEndpointsResult
 	 * @memberof whosonfirst.data	   	   
-	 * @property {Object} data
-	 * @property {string} endpoint
+	 * @property {Object} data - The body of the Who's On First record that was retrived.
+	 * @property {string} endpoint – The endpoint from which the Who's On First record was retrieved.
 	 */
 
 	/**
