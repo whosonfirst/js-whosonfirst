@@ -1,5 +1,8 @@
 MINIFY=minify
 
+jsdoc:
+	jsdoc -d docs src/whosonfirst.data.js
+
 compile:
 	mkdir -p dist
 	$(MINIFY) -b -o dist/whosonfirst.min.js \
