@@ -21,7 +21,12 @@
 	<script type="text/javascript" src="../src/whosonfirst.data.js"></script>
 	<script type="text/javascript" src="../src/whosonfirst.namify.js"></script>
 	<script type="text/javascript">
-	 whosonfirst.namify.namify();
+	 
+	 whosonfirst.namify.namify().then((rsp) => {
+	     console.log("Namified!");
+	 }).catch((err) => {
+	     console.error("Failed to namify", err)
+	 });
 
 	 const endpoints = [
 	     "https://static.sfomuseum.org/geojson/",
@@ -33,7 +38,11 @@
 	     endpoints: endpoints,
 	 };
 	 
-	 whosonfirst.namify.namifyWithOptions(opts);
+	 whosonfirst.namify.namifyWithOptions(opts).then((rsp) => {
+	     console.log("Namified with options!");
+	 }).catch((err) => {
+	     console.error("Failed to namify with options", err)
+	 });;
 	 
 	</script>
     </body>
