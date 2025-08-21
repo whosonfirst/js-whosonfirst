@@ -4,9 +4,9 @@ whosonfirst.geojson = (function(){
 
 	var self = {
 
-	    derive_bbox_as_feature: function(geojson){
-
-		var poly = self.derive_bbox_as_polygon(geojson);
+	    deriveBboxAsFeature: function(geojson),
+	    
+		var poly = self.deriveBboxAsPolygon(geojson);
 		var geom = { 'type': 'Polygon', 'coordinates': poly };
 		var props = geojson['properties'];
 
@@ -14,9 +14,9 @@ whosonfirst.geojson = (function(){
 		return feature;
 	    },
 
-	    derive_bbox_as_bounds: function(geojson){
+	    deriveBboxAsBounds: function(geojson){
 
-		var bbox = self.derive_bbox(geojson);
+		var bbox = self.deriveBbox(geojson);
 		
 		var swlon = bbox[0];
 		var swlat = bbox[1];
@@ -29,9 +29,9 @@ whosonfirst.geojson = (function(){
 		];
 	    },
 	    
-	    derive_bbox_as_polygon: function(geojson){
+	    deriveBboxAsPolygon: function(geojson){
 
-		var bbox = self.derive_bbox(geojson);
+		var bbox = self.deriveBbox(geojson);
 		
 		var swlon = bbox[0];
 		var swlat = bbox[1];
@@ -49,7 +49,7 @@ whosonfirst.geojson = (function(){
 		return poly;
 	    },
 
-	    derive_bbox: function(geojson){
+	    deriveBbox: function(geojson){
 		
 		if (geojson['bbox']){
 		    return geojson['bbox'];
@@ -67,7 +67,7 @@ whosonfirst.geojson = (function(){
 		    
 		    for (var i=0; i < count; i++){
 			
-			var bbox = self.derive_bbox(features[i]);
+			var bbox = self.deriveBbox(features[i]);
 			
 			var _swlat = bbox[1];
 			var _swlon = bbox[0];
@@ -147,8 +147,28 @@ whosonfirst.geojson = (function(){
 		}
 		
 		else {}
+	    },
+
+	    derive_bbox_as_feature: function(geojson){
+		console.warn("derive_bbox_as_feature is deprecated, use deriveBboxAsFeature instead.");
+		return self.deriveBboxAsFeature(geojson);
+	    },
+
+	    derive_bbox_as_bounds: function(geojson){
+		console.warn("derive_bbox_as_bounds is deprecated, use deriveBboxAsBounds instead.");
+		return self.deriveBboxAsFeature(geojson);		
+	    },
+
+	    derive_bbox_as_polygon: function(geojson){
+		console.warn("derive_bbox_as_polygon is deprecated, use deriveBboxAsPolygon instead.");
+		return self.deriveBboxAsPolygon(geojson);		
 	    }
-	    
+
+	    derive_bbox: function(geojson){
+		console.warn("derive_bbox is deprecated, use deriveBbox instead.");
+		return self.deriveBbox(geojson);
+	    },
+	    	    
 	};
 	
 	return self;
