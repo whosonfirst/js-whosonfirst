@@ -4,7 +4,7 @@ whosonfirst.geojson = (function(){
 
 	var self = {
 
-	    'derive_bbox_as_feature': function(geojson){
+	    derive_bbox_as_feature: function(geojson){
 
 		var poly = self.derive_bbox_as_polygon(geojson);
 		var geom = { 'type': 'Polygon', 'coordinates': poly };
@@ -29,7 +29,7 @@ whosonfirst.geojson = (function(){
 		];
 	    },
 	    
-	    'derive_bbox_as_polygon': function(geojson){
+	    derive_bbox_as_polygon: function(geojson){
 
 		var bbox = self.derive_bbox(geojson);
 		
@@ -49,7 +49,7 @@ whosonfirst.geojson = (function(){
 		return poly;
 	    },
 
-	    'derive_bbox': function(geojson){
+	    derive_bbox: function(geojson){
 		
 		if (geojson['bbox']){
 		    return geojson['bbox'];

@@ -6,6 +6,27 @@ whosonfirst.data = (function(){
     
     var self = {
 
+	/**
+	 * @typedef {Object} fetchWithEndpointsResult
+	 * @property {Object} data
+	 * @property {string} endpoint
+	 */
+
+	/**
+	 * @typedef {Object} fetchArgs
+	 * @property {number} cache_ttl - The "time to live" in milliseconds for cached items. Optional, default is 30000.
+	 * @property {boolean} cache-busting - If true then all URLs will be appended with a '?cb={random_number}' query parameter.
+	 */
+	   
+	/**
+	 * Fetch the body of a Who's On First record from a set of endpoints, returning data
+	 * for the first successful response..
+	 *
+	 * @param {string[]} endpoints - A list of endpoints to query.
+	 * @param {number} rel_path - The relative path of the Who's On First document to fetch.
+	 * @params {fetchArgs} args - Optionals arguments for fetching records.
+	 * @returns {Promise.<fetchWithEndpointsResult>} A fetchWithEndpointsResult object.
+	 */
 	fetchWithEndpoints: function(endpoints, rel_path, args) {
 
 	    return new Promise((resolve, reject) => {
@@ -33,7 +54,14 @@ whosonfirst.data = (function(){
 		
 	    });
 	},
-	
+
+	/**
+	 * Fetch the body of a Who's On First record.
+	 *
+	 * @param {string} uri - The absolute URI of the Who's On First document to fetch.
+	 * @params {fetchArgs} args - Optionals arguments for fetching records.
+	 * @returns {Promise.<Object>} The body the Who's On First record.
+	 */	
 	fetch: function(url, args){
 	    
 	    return new Promise((resolve, reject) => {
@@ -60,55 +88,7 @@ whosonfirst.data = (function(){
 		    resolve(data);
 		}).catch((err) => {
 		    console.debug("Failed to retrieve cache data", url, err);
-		    self.fetch_with_xhr(url, args).then((data) => {
-			resolve(data);
-		    }).catch((err) => {
-			reject(err);
-		    });
-		});
-	    });
 
-	},
-			       
-	fetch_with_xhr: function(url, args){
-	    
-	    return new Promise((resolve, reject) => {
-		
-		console.debug("xhr " + url);
-		
-		if (! args){
-		    args = {};
-		}
-		
-		var req = new XMLHttpRequest();
-		
-		req.onload = function(){
-		    
-		    console.debug("fetch " + url + ":" + this.status);
-		    
-		    if (this.status != 200){
-			console.error("failed to fetch " + url + ", because " + this.statusText + " (" + this.status + ")");
-			reject(this.statusText);
-			return false;
-		    }
-		    
-		    try {
-			var data = JSON.parse(this.responseText);
-		    } catch (err){
-			console.error("failed to parse " + url + ", because " + err);
-			reject(err);
-			return false;
-		    }
-		    
-		    self.cache_set(url, data).catch((err) => {
-			console.error("Failed to cache URL", url, err);
-		    });
-
-		    resolve(data);
-		};
-		
-		try {
-		    
 		    if (args["cache-busting"]){
 			
 			var cb = Math.floor(Math.random() * 1000000);
@@ -127,18 +107,34 @@ whosonfirst.data = (function(){
 			url = tmp.href;
 		    }
 		    
-		    req.open("get", url, true);
-		    req.send();
-		    
-		} catch(err){
-		    console.error("failed to fetch " + url + ", because ", err);
-		    reject(err);
-		}
+		    fetch(url).then(rsp =>
+			rsp.json()
+		    ).then((data) => {
+			
+			self.cache_set(url, data).catch((err) => {
+			    console.error("Failed to cache URL", url, err);
+			});
+			
+			resolve(data);
+			
+		    }).catch((err) => {
+			console.error("Failed to fetch URI", url, err)
+			reject(err);
+		    });
+			
+		});
 	    });
-	    
+
 	},
-	
-	cache_get: function(key, on_hit, on_miss, cache_ttl){
+
+	/**
+	 * Fetch the body of a Who's On First record from the local cache.
+	 *
+	 * @param {string} key - The cache key the Who's On First document to fetch.
+	 * @param {number} ttl - The maximum age (in seconds) for cache items to be considered valid.
+	 * @returns {Promise.<Object>} The body the Who's On First record.
+	 */		
+	cache_get: function(key, cache_ttl){
 	    
 	    return new Promise((resolve, reject) => {
 		
@@ -182,7 +178,14 @@ whosonfirst.data = (function(){
 	    });
 	    
 	},
-	
+
+	/**
+	 * Cache the body of a Who's On First record locally.
+	 *
+	 * @param {string} key - The cache key the Who's On First document to cache.
+	 * @param {Object} value - The body the Who's On First record to cache.
+	 * @returns {Promise} 
+	 */		
 	cache_set: function(key, value){
 	    
 	    return new Promise((resolve, reject) => {
@@ -207,7 +210,13 @@ whosonfirst.data = (function(){
 	    });
 	    
 	},
-	    
+
+	/**
+	 * Remove a Who's On First record from the local cache.
+	 *
+	 * @param {string} key - The cache key the Who's On First document to remove.
+	 * @returns {Promise} 
+	 */			
 	cache_unset: function(key){
 	    
 	    return new Promise((resolve, reject) => {
@@ -224,9 +233,13 @@ whosonfirst.data = (function(){
 	    });
 	    
 	},
-	
+
+	/**
+	 * @access private
+	 * @description Internal helper to append a local identifier to cache keys.
+	 */
 	'cache_prep_key': function(key){
-	    return key + '#whosonfirst.net';
+	    return key + '#whosonfirst.data';
 	},
 	
     };

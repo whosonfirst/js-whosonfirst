@@ -6,7 +6,7 @@ whosonfirst.uri = (function(){
 	
     var self = {
 	
-	'endpoint': function(e){
+	endpoint: function(e){
 
 	    if (e){
 		console.log("set uri endpoint to " + e);
@@ -16,7 +16,7 @@ whosonfirst.uri = (function(){
 	    return _endpoint;
 	},
 	
-	'id2abspath': function (id, args){
+	id2abspath: function (id, args){
 	    
 	    var rel_path = self.id2relpath(id, args);
 	    var abs_path = self.endpoint() + rel_path;
@@ -24,7 +24,7 @@ whosonfirst.uri = (function(){
 	    return abs_path;
 	},
 	
-	'id2relpath': function(id, args){
+	id2relpath: function(id, args){
 	    
 	    parent = self.id2parent(id);
 	    fname = self.id2fname(id, args);
@@ -33,7 +33,7 @@ whosonfirst.uri = (function(){
 	    return rel_path;
 	},
 	
-	'id2parent': function(id){
+	id2parent: function(id){
 	    
 	    str_id = new String(id);
 	    tmp = new Array();
@@ -49,7 +49,7 @@ whosonfirst.uri = (function(){
 	    return parent;
 	},
 	
-	'id2fname': function(id, args){
+	id2fname: function(id, args){
 	    
 	    if (! args){
 		args = {};
