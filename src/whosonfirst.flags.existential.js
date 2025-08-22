@@ -68,7 +68,7 @@ whosonfirst.flags.existential = (function(){
 		return 0;
 	    }
 	    
-	    else if (props['edtf:deprecated'] === 'u' ||
+	    else if (props['edtf:deprecated'] === '' ||
 		     props['edtf:deprecated'] === 'uuuu'){
 		return -1;
 	    }
@@ -88,15 +88,13 @@ whosonfirst.flags.existential = (function(){
 
 	    const props = feature.properties;
 	    
-	    if (typeof props['edtf:cessation'] === 'undefined' ||
-		props['edtf:cessation'] === 'u' ||
-		props['edtf:cessation'] === 'uuuu'){
-		return -1;
-	    }
-	    else if (! props['edtf:cessation']){
+	    if (typeof props['edtf:cessation'] === 'undefined'){
 		return 0;
-	    }
-	    else {
+	    } else if (props['edtf:cessation'] == 'open' || props['edtf:cessation'] == '..'){
+		return 0;
+	    } else if (props['edtf:cessation'] === '' || props['edtf:cessation'] === 'uuuu'){
+		return -1;
+	    } else {
 		return 1;
 	    }
 	},
