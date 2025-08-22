@@ -4,14 +4,6 @@
 
 var whosonfirst = whosonfirst || {};
 
-// this is an early port of py-mapzen-whosonfirst-placetypes and porting
-// all this code to another language may necessitate changes which is not
-// the goal of this exercise but useful and all that...
-// (21050911/thisisaaronland)
-
-// also this (21050911/thisisaaronland)
-// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/yield#Browser_compatibility
-
 whosonfirst.placetypes = (function(){
 
     var __placetypes__ = {};
@@ -79,6 +71,27 @@ whosonfirst.placetypes = (function(){
     var self = {
 
 	/**
+	 * @typedef {Object} PlaceType
+	 * @memberof whosonfirst.placetypes	   
+	 * @property {function():string} toString  - Returns the name of the placetype.
+	 * @property {function():number} id  - Returns the unique ID of the placetype.
+	 * @property {function():string} role  - Returns the role associated with the placetype.
+	 * @property {function():string} name  - Returns the name of the placetype.
+	 * @property {function():PlaceTypeName[]} names  - Returns the list of alternate names for the placetype.
+	 * @property {function():string[]} parents - Returns the list of placetypes which immediately parent the placetype.
+	 * @property {function():string[]} ancestors - Returns the list of placetypes which contain the placetype.	   
+	 */
+
+	/**
+	 * @typedef {Object} PlaceTypeName
+	 * @memberof whosonfirst.placetypes
+	 * @property {string} lang - The language of the placetype name.
+	 * @property {string} kind - The [kind] suffix for the placetype label.
+	 * @property {string} name - The name of the placetype.	   
+	 * @property {function():string} toString  - Returns the name of the placetype.
+	 */
+	
+	/**
 	 * @function initializeWithSpec
 	 * @memberof whosonfirst.placetypes
 	 * @description Initialize a Who's On First placetypes specification.
@@ -89,14 +102,14 @@ whosonfirst.placetypes = (function(){
 	},
 	
 	/**
-	 * @function placetypename
+	 * @function placetypeName
 	 * @memberof whosonfirst.placetypes
-	 * @description ...
-	 * @param {string} label - ...
-	 * @param {string} name - ...
-	 * @returns ...
+	 * @description Returns a new PlaceTypeName instance.
+	 * @param {string} label - The [lang] + "_" + [kind] label for the placetype name.
+	 * @param {string} name - The name of the placeptye
+	 * @returns {PlaceTypeName}
 	 */		    	
-	placetypename: function(label, name){
+	placetypeName: function(label, name){
 	    
 	    const instance = function(label, name){
 		
@@ -125,20 +138,24 @@ whosonfirst.placetypes = (function(){
 	 * @memberof whosonfirst.placetypes
 	 * @description Instantiate a new placetype instance
 	 * @param {string} name The name of the placetype to instantiate.
-	 * @returns ...
+	 * @returns {PlaceType}
 	 */		    		
 	placetype: function(name){
 		
 	    if (! self.is_valid_placetype(name)){
 		return undefined;
 	    }
-	    
+
+	    /**
+	     * @type {PlaceType}
+	     * @memberof whosonfirst.placetypes	       
+	     */
 	    const instance = function(name){
 		
 		var _self = {
 		    placetype: name,
 		    details: __placetypes__[name],
-		    
+
 		    toString: function(){
 			return _self.placetype;
 		    },
