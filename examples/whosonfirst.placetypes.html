@@ -1,0 +1,63 @@
+<html>
+    <head>
+	<title>Placetypes example</title>
+    </head>
+    <body>
+	<h1>Placetypes</h1>
+	<div id="placetypes">
+	</div>
+	
+	<script type="text/javascript" src="../src/whosonfirst.placetypes.js"></script>
+	<script type="text/javascript">
+	 
+	 const wrapper = document.getElementById("placetypes");
+
+	 const render_placetypes = function(placetypes){
+
+	     const count = placetypes.length;
+
+	     for (var i=0; i < count; i++){
+
+		 const name = placetypes[i];
+
+		 const h2 = document.createElement("h2");
+		 h2.appendChild(document.createTextNode(name));
+		 wrapper.appendChild(h2);
+
+		 const valid = whosonfirst.placetypes.isValidPlacetype(name);
+
+		 const valid_p = document.createElement("p");
+		 valid_p.appendChild(document.createTextNode("Is valid: " + valid));
+		 wrapper.appendChild(valid_p);
+
+		 const pt = whosonfirst.placetypes.placetype(name);
+
+		 const name_p = document.createElement("p");
+		 name_p.appendChild(document.createTextNode("Name: " + pt.name()));
+		 wrapper.appendChild(name_p);
+
+		 const role_p = document.createElement("p");
+		 role_p.appendChild(document.createTextNode("Role: " + pt.role()));
+		 wrapper.appendChild(role_p);
+		 
+		 const parents_p = document.createElement("p");
+		 parents_p.appendChild(document.createTextNode("Parents: " + pt.parents().join(", ")));
+		 wrapper.appendChild(parents_p);
+
+		 const ancestors_p = document.createElement("p");
+		 ancestors_p.appendChild(document.createTextNode("Ancestors: " + pt.ancestors().join(", ")));
+		 wrapper.appendChild(ancestors_p);
+	     }
+	 };
+	 
+	 const common = whosonfirst.placetypes.commonPlacetypes();
+	 const common_optional = whosonfirst.placetypes.commonOptionalPlacetypes();
+	 const optional = whosonfirst.placetypes.optionalPlacetypes();
+	 
+	 render_placetypes(common);
+	 render_placetypes(common_optional);
+	 render_placetypes(optional);	 
+	 
+	</script>
+    </body>
+</html>

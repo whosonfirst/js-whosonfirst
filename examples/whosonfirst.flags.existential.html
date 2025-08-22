@@ -1,0 +1,70 @@
+<html>
+    <head>
+	<title>Flags example</title>
+    </head>
+    <body>
+	<h1>Existential flags</h1>
+	<ul>
+	    <li class="wof" data-wof-id="102527513"><code>102527513</code></li>
+	    <li class="wof" data-wof-id="101736545"><code>101736545</code></li>
+	    <li class="wof" data-wof-id="1477856009"><code>1477856009</code</li>
+	    <li class="wof" data-wof-id="1360691531"><code>1360691531</code></li>
+	</ul>
+
+	<script type="text/javascript" src="../src/whosonfirst.uri.js"></script>	
+	<script type="text/javascript" src="../src/whosonfirst.uri.init.js"></script>
+	<script type="text/javascript" src="../src/whosonfirst.data.js"></script>
+	<script type="text/javascript" src="../src/whosonfirst.flags.existential.js"></script>
+	<script type="text/javascript">
+	 
+	 const els = document.getElementsByClassName("wof");
+	 const count = els.length;
+
+	 for (var i=0; i < count; i++){
+
+	     const id = els[i].getAttribute("data-wof-id");
+	     const uri = whosonfirst.uri.id2abspath(id);
+
+	     const this_el = els[i];
+	     
+	     whosonfirst.data.fetch(uri).then((rsp) => {
+
+		 const ul = document.createElement("ul");
+
+		 const current_li = document.createElement("li");
+		 current_li.appendChild(document.createTextNode("is current:"));
+		 current_li.appendChild(document.createTextNode(whosonfirst.flags.existential.isCurrent(rsp)));
+		 ul.appendChild(current_li);
+
+		 const deprecated_li = document.createElement("li");
+		 deprecated_li.appendChild(document.createTextNode("is deprecated:"));
+		 deprecated_li.appendChild(document.createTextNode(whosonfirst.flags.existential.isDeprecated(rsp)));
+		 ul.appendChild(deprecated_li);
+
+		 const ceased_li = document.createElement("li");
+		 ceased_li.appendChild(document.createTextNode("is ceased:"));
+		 ceased_li.appendChild(document.createTextNode(whosonfirst.flags.existential.isCeased(rsp)));
+		 ul.appendChild(ceased_li);
+
+		 const superseding_li = document.createElement("li");
+		 superseding_li.appendChild(document.createTextNode("is superseding:"));
+		 superseding_li.appendChild(document.createTextNode(whosonfirst.flags.existential.isSuperseding(rsp)));
+		 ul.appendChild(superseding_li);
+		 
+		 const superseded_li = document.createElement("li");
+		 superseded_li.appendChild(document.createTextNode("is superseded:"));
+		 superseded_li.appendChild(document.createTextNode(whosonfirst.flags.existential.isSuperseded(rsp)));
+		 ul.appendChild(superseded_li);
+
+		 this_el.appendChild(document.createTextNode(" – " + rsp.properties["wof:name"]));
+		 this_el.appendChild(ul);
+		 
+	     }).catch((err) => {
+		 console.error("Failed to fetch record", uri, err);
+	     });
+	     
+	 }
+	 
+	</script>
+    </body>
+</html>
