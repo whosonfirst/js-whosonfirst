@@ -13,8 +13,8 @@ whosonfirst.data = (function(){
 	/**
 	 * @typedef {Object} fetchWithEndpointsResult
 	 * @memberof whosonfirst.data	   	   
-	 * @property {Object} data - The body of the Who's On First record that was retrived.
-	 * @property {string} endpoint – The endpoint from which the Who's On First record was retrieved.
+	 * @property {Object} data - The body of the Who's On First GeoJSON Feature record that was retrived.
+	 * @property {string} endpoint – The endpoint from which the Who's On First GeoJSON Feature record was retrieved.
 	 */
 
 	/**
@@ -27,7 +27,7 @@ whosonfirst.data = (function(){
 	/**
 	 * @function fetchWithEndpoints
 	 * @memberof whosonfirst.data	   
-	 * @description Fetch the body of a Who's On First record from a set of endpoints, returning data
+	 * @description Fetch the body of a Who's On First GeoJSON Feature record from a set of endpoints, returning data
 	 * for the first successful response..
 	 * @param {string[]} endpoints - A list of endpoints to query.
 	 * @param {number} rel_path - The relative path of the Who's On First document to fetch.
@@ -65,10 +65,10 @@ whosonfirst.data = (function(){
 	/**
 	 * @function fetch
 	 * @memberof whosonfirst.data
-	 * @description Fetch the body of a Who's On First record.
+	 * @description Fetch the body of a Who's On First GeoJSON Feature record.
 	 * @param {string} uri - The absolute URI of the Who's On First document to fetch.
 	 * @params {fetchArgs} args - Optionals arguments for fetching records.
-	 * @returns {Promise.<Object>} The body the Who's On First record.
+	 * @returns {Promise.<Object>} The body the Who's On First GeoJSON Feature record.
 	 */	
 	fetch: function(url, args){
 	    
@@ -136,11 +136,11 @@ whosonfirst.data = (function(){
 	},
 
 	/**
-	 * Fetch the body of a Who's On First record from the local cache.
+	 * Fetch the body of a Who's On First GeoJSON Feature record from the local cache.
 	 *
 	 * @param {string} key - The cache key the Who's On First document to fetch.
 	 * @param {number} ttl - The maximum age (in seconds) for cache items to be considered valid.
-	 * @returns {Promise.<Object>} The body the Who's On First record.
+	 * @returns {Promise.<Object>} The body the Who's On First GeoJSON Feature record.
 	 */		
 	cache_get: function(key, cache_ttl){
 	    
@@ -188,10 +188,10 @@ whosonfirst.data = (function(){
 	},
 
 	/**
-	 * Cache the body of a Who's On First record locally.
+	 * Cache the body of a Who's On First GeoJSON Feature record locally.
 	 *
 	 * @param {string} key - The cache key the Who's On First document to cache.
-	 * @param {Object} value - The body the Who's On First record to cache.
+	 * @param {Object} value - The body the Who's On First GeoJSON Feature record to cache.
 	 * @returns {Promise} 
 	 */		
 	cache_set: function(key, value){
@@ -220,7 +220,7 @@ whosonfirst.data = (function(){
 	},
 
 	/**
-	 * Remove a Who's On First record from the local cache.
+	 * Remove a Who's On First GeoJSON Feature record from the local cache.
 	 *
 	 * @param {string} key - The cache key the Who's On First document to remove.
 	 * @returns {Promise} 
