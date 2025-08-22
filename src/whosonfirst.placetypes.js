@@ -348,30 +348,37 @@ whosonfirst.placetypes = (function(){
 	},
 
 	is_valid_placetype: function(pt, role){
+	    console.warn("is_valid_placetype is deprecated, please use isValidPlacetype");
 	    return self.isValidPlacetype(pt, role);
 	},
 
 	common: function(){
+	    console.warn("common is deprecated, please use commonPlacetypes");	    
 	    return self.commonPlacetypes();
 	},
 	
 	common_optional: function(){
+	    console.warn("common_optional is deprecated, please use commonOptionalPlacetypes");	    	    
 	    return self.commonOptionalPlacetypes();
 	},
 
 	optional: function(){
+	    console.warn("optional is deprecated, please use optionalPlacetypes");	    	    	    
 	    return self.optionalPlacetypes();
 	},
 
 	is_valid_role: function(role){
+	    console.warn("is_valid_role is deprecated, please use isValidRole");
 	    return self.isValidRole(role);
 	},
 
 	with_role: function(role){
+	    console.warn("with_role is deprecated, please use withRole");	    
 	    return self.withRole(role);
 	},
 
-	with_roles: function(roles){	
+	with_roles: function(roles){
+	    console.warn("with_roles is deprecated, please use withRoles");	    	    
 	    return self.withRoles(roles);
 	},
     };

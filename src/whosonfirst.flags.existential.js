@@ -155,7 +155,7 @@ whosonfirst.flags.existential = (function(){
 	    return self.isCeased(feature);
 	},
 	
-	      is_superseding: function(feature){
+	is_superseding: function(feature){
 	    console.warn("is_superseding is deprecated, use isSuperseding instead.");		  		  
 	    return self.isSuperseding(feature);
 	},
