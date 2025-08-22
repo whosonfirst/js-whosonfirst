@@ -159,7 +159,7 @@ whosonfirst.flags.existential = (function(){
 	    return self.isSuperseding(feature);
 	},
 	
-	      'is_superseded': function(feature){
+        'is_superseded': function(feature){
 	    console.warn("is_superseded is deprecated, use isSuperseded instead.");		  		  
 	    return self.isSuperseded(feature);
 	},

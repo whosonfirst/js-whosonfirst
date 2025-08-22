@@ -8,19 +8,33 @@ whosonfirst.geojson = (function(){
 
 	var self = {
 
-	    deriveBboxAsFeature: function(geojson){
+	    /**
+	     * @function deriveBboxAsFeature
+	     * @memberof whosonfirst.geojson
+	     * @description ...
+	     * @param {Object} feature - The Who's On First record to query.
+	     * @returns {Object}.
+	     */		    
+	    deriveBboxAsFeature: function(feature){
 	    
-		var poly = self.deriveBboxAsPolygon(geojson);
+		var poly = self.deriveBboxAsPolygon(feature);
 		var geom = { 'type': 'Polygon', 'coordinates': poly };
-		var props = geojson['properties'];
+		var props = feature['properties'];
 
 		var feature = { 'type': 'Feature', 'properties': props, 'geometry': geom };
 		return feature;
 	    },
 
-	    deriveBboxAsBounds: function(geojson){
+	    /**
+	     * @function deriveBboxAsBounds
+	     * @memberof whosonfirst.geojson
+	     * @description ...
+	     * @param {Object} feature - The Who's On First record to query.
+	     * @returns {Object}
+	     */		    	    
+	    deriveBboxAsBounds: function(feature){
 
-		var bbox = self.deriveBbox(geojson);
+		var bbox = self.deriveBbox(feature);
 		
 		var swlon = bbox[0];
 		var swlat = bbox[1];
@@ -32,10 +46,17 @@ whosonfirst.geojson = (function(){
 		    [ nelat, nelon ],
 		];
 	    },
-	    
-	    deriveBboxAsPolygon: function(geojson){
 
-		var bbox = self.deriveBbox(geojson);
+	    /**
+	     * @function deriveBboxAsPloygon
+	     * @memberof whosonfirst.geojson
+	     * @description ...
+	     * @param {Object} feature - The Who's On First record to query.
+	     * @returns {Object}
+	     */		    	    
+	    deriveBboxAsPolygon: function(feature){
+
+		var bbox = self.deriveBbox(feature);
 		
 		var swlon = bbox[0];
 		var swlat = bbox[1];
@@ -53,15 +74,22 @@ whosonfirst.geojson = (function(){
 		return poly;
 	    },
 
-	    deriveBbox: function(geojson){
+	    /**
+	     * @function deriveBbox
+	     * @memberof whosonfirst.geojson
+	     * @description ...
+	     * @param {Object} feature - The Who's On First record to query.
+	     * @returns {Object}.
+	     */		    	    
+	    deriveBbox: function(feature){
 		
-		if (geojson['bbox']){
-		    return geojson['bbox'];
+		if (feature['bbox']){
+		    return feature['bbox'];
 		}
 		
-		if (geojson['type'] == 'FeatureCollection'){
+		if (feature['type'] == 'FeatureCollection'){
 		    
-		    var features = geojson['features'];
+		    var features = feature['features'];
 		    var count = features.length;
 		    
 		    var swlat = undefined;
@@ -98,12 +126,12 @@ whosonfirst.geojson = (function(){
 		    return [ swlon, swlat, nelon, nelat ];
 		}
 		
-		else if (geojson['type'] == 'Feature'){
+		else if (feature['type'] == 'Feature'){
 		    
 		    // Adapted from http://gis.stackexchange.com/a/172561
 		    // See also: https://tools.ietf.org/html/rfc7946#section-3.1
 		    
-		    var geom = geojson['geometry'];
+		    var geom = feature['geometry'];
 		    var coords = geom.coordinates;
 		    
 		    var lats = [],
@@ -153,24 +181,24 @@ whosonfirst.geojson = (function(){
 		else {}
 	    },
 
-	    derive_bbox_as_feature: function(geojson){
+	    derive_bbox_as_feature: function(feature){
 		console.warn("derive_bbox_as_feature is deprecated, use deriveBboxAsFeature instead.");
-		return self.deriveBboxAsFeature(geojson);
+		return self.deriveBboxAsFeature(feature);
 	    },
 
-	    derive_bbox_as_bounds: function(geojson){
+	    derive_bbox_as_bounds: function(feature){
 		console.warn("derive_bbox_as_bounds is deprecated, use deriveBboxAsBounds instead.");
-		return self.deriveBboxAsFeature(geojson);		
+		return self.deriveBboxAsFeature(feature);		
 	    },
 
-	    derive_bbox_as_polygon: function(geojson){
+	    derive_bbox_as_polygon: function(feature){
 		console.warn("derive_bbox_as_polygon is deprecated, use deriveBboxAsPolygon instead.");
-		return self.deriveBboxAsPolygon(geojson);		
+		return self.deriveBboxAsPolygon(feature);		
 	    },
 
-	    derive_bbox: function(geojson){
+	    derive_bbox: function(feature){
 		console.warn("derive_bbox is deprecated, use deriveBbox instead.");
-		return self.deriveBbox(geojson);
+		return self.deriveBbox(feature);
 	    },
 	    	    
 	};
