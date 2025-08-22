@@ -1,5 +1,6 @@
 /**
  * @namespace whosonfirst.placetypes
+ * @description Methods for working with and validating Who's On First placetypes.
  */
 
 var whosonfirst = whosonfirst || {};

@@ -4,6 +4,7 @@
 
 /**
  * @namespace whosonfirst.flags.existential
+ * @description Methods for retrieving Who's On First "existential" flag.         
  */
 
 var whosonfirst = whosonfirst || {};

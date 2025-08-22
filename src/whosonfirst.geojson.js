@@ -1,5 +1,6 @@
 /**
  * @namespace whosonfirst.geojson
+ * @description Methods for working with GeoJSON Feature records.     
  */
 
 var whosonfirst = whosonfirst || {};

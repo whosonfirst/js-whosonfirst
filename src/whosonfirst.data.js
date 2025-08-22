@@ -1,5 +1,6 @@
 /**
  * @namespace whosonfirst.data
+ * @description Methods for retrieving Who's On First data records.
  */
 
 var whosonfirst = whosonfirst || {};

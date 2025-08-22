@@ -1,5 +1,6 @@
 /**
  * @namespace whosonfirst.namify
+ * @description Methods for applying Who's On First names to DOM elements.   
  */
 
 var whosonfirst = whosonfirst || {};

@@ -1,5 +1,6 @@
 /**
  * @namespace whosonfirst.uri
+ * @description Methods for deriving URIs from Who's On First identifiers.   
  */
 
 var whosonfirst = whosonfirst || {};
@@ -9,7 +10,23 @@ whosonfirst.uri = (function(){
     var _endpoint = "https://data.whosonfirst.org/";
 	
     var self = {
-	
+
+	/**
+	 * @typedef {Object} uriArgs
+	 * @memberof whosonfirst.uri	   	   
+	 * @property {boolean} [alt] - Flags that this is an "alternate" geometry URI.
+	 * @property {string} [source] - The source component of an "alternate" geometry URI.
+	 * @property {string} [function] - The function component of an "alternate" geometry URI.
+	 * @property {string[]} [extras] - Any additional, use-specific, components of an "alternate" geometry URI.	   	   
+	 */
+
+	/**
+	 * @function endpoint
+	 * @memberof whosonfirst.uri
+	 * @description Returns the currently assigned endpoint URI. Default is https://data.whosonfirst.org.
+	 * @param {string} [e] - A new endpoint URI to assign.
+	 * @returns {string} Returns the currently assigned endpoint URI.
+	 */		    		
 	endpoint: function(e){
 
 	    if (e){
@@ -19,25 +36,48 @@ whosonfirst.uri = (function(){
 	    
 	    return _endpoint;
 	},
-	
-	id2abspath: function (id, args){
+
+	/**
+	 * @function idToAbsPath
+	 * @memberof whosonfirst.uri
+	 * @description Derive the absolute URI for a Who's On First ID.
+	 * @param {number} id - A valid Who's On First ID.
+	 * @param {uriArgs} [args] - Any additional arguments for deriving the final URI.
+	 * @returns {string} The absolute URI for a Who's On First ID.
+	 */		    			
+	idToAbsPath: function(id, args){
 	    
-	    var rel_path = self.id2relpath(id, args);
+	    var rel_path = self.idToRelPath(id, args);
 	    var abs_path = self.endpoint() + rel_path;
 	    
 	    return abs_path;
 	},
-	
-	id2relpath: function(id, args){
+
+	/**
+	 * @function idToRelPath
+	 * @memberof whosonfirst.uri
+	 * @description Derive the relvative URI for a Who's On First ID.
+	 * @param {number} id - A valid	Who's On First ID.
+	 * @param {uriArgs} [args] - Any additional arguments for deriving the final URI.
+	 * @returns {string} The absolute URI for a Who's On First ID.
+	 */		    				
+	idToRelPath: function(id, args){
 	    
-	    parent = self.id2parent(id);
-	    fname = self.id2fname(id, args);
+	    parent = self.idToRoot(id);
+	    fname = self.idToFilename(id, args);
 	    
 	    var rel_path = parent + "/" + fname;
 	    return rel_path;
 	},
-	
-	id2parent: function(id){
+
+	/**
+	 * @function idToRoot
+	 * @memberof whosonfirst.uri
+	 * @description Derive the tree "root" for a Who's On First ID.
+	 * @param {number} id - A valid Who's On First ID.
+	 * @returns {string} The tree "root" for a Who's On First ID.
+	 */		    				
+	idToRoot: function(id){
 	    
 	    str_id = new String(id);
 	    tmp = new Array();
@@ -52,8 +92,16 @@ whosonfirst.uri = (function(){
 	    parent = tmp.join("/");
 	    return parent;
 	},
-	
-	id2fname: function(id, args){
+
+	/**
+	 * @function idToFilename
+	 * @memberof whosonfirst.uri
+	 * @description - Derive the filename for a Who's On First ID.
+	 * @param {number} id - A valid Who's On First ID.
+	 * @param {uriArgs} [args] - Any additional arguments for deriving the filename.
+	 * @returns {string} The filename for a Who's On First ID.
+	 */		    				
+	idToFilename: function(id, args){
 	    
 	    if (! args){
 		args = {};
@@ -94,7 +142,7 @@ whosonfirst.uri = (function(){
 		}
 		
 		else {
-		    console.log("missing source parameter for alternate geometry");
+		    console.warn("missing source parameter for alternate geometry");
 		    fname.push("unknown");
 		}
 		
@@ -102,6 +150,26 @@ whosonfirst.uri = (function(){
 	    
 	    var str_fname = fname.join("-");
 	    return str_fname + ".geojson";
+	},
+
+	id2abspath: function (id, args){
+	    console.warn("id2abspath is deprecated, please use idToAbsPath");
+	    return self.idToAbsPath(id, args);
+	},
+
+	id2relpath: function (id, args){
+	    console.warn("id2relpath is deprecated, please use idToRelPath");	    
+	    return self.idToRelPath(id, args);
+	},
+
+	id2parent: function(id){
+	    console.warn("id2parent is deprecated, please use idToRoot");	    	    
+	    return self.idToParent(id);
+	},
+
+	id2fname: function(id, args){
+	    console.warn("id2fname is deprecated, please use idToFilename");	    	    	    
+	    return self.idToFilename(id, args);
 	},
 	
     };
