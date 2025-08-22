@@ -11,9 +11,9 @@ whosonfirst.geojson = (function(){
 	    /**
 	     * @function deriveBboxAsFeature
 	     * @memberof whosonfirst.geojson
-	     * @description ...
-	     * @param {Object} feature - The Who's On First record to query.
-	     * @returns {Object}.
+	     * @description Derive the bounding box for a Who's On First GeoJSON Feature record and return it encoded as a GeoJSON Feature record (whose geometry is a Polygon).
+	     * @param {Object} feature - The Who's On First GeoJSON Feature record to query.
+	     * @returns {Object} - Returns a GeoJSON Feature record.
 	     */		    
 	    deriveBboxAsFeature: function(feature){
 	    
@@ -28,9 +28,9 @@ whosonfirst.geojson = (function(){
 	    /**
 	     * @function deriveBboxAsBounds
 	     * @memberof whosonfirst.geojson
-	     * @description ...
-	     * @param {Object} feature - The Who's On First record to query.
-	     * @returns {Object}
+	     * @description Derive the bounding box for a Who's On First GeoJSON Feature record and return it encoded as an array of [lat, lon] arrays.
+	     * @param {Object} feature - The Who's On First GeoJSON Feature record to query.
+	     * @returns {Object} - Returns an array of [lat, lon] arrays.
 	     */		    	    
 	    deriveBboxAsBounds: function(feature){
 
@@ -48,11 +48,11 @@ whosonfirst.geojson = (function(){
 	    },
 
 	    /**
-	     * @function deriveBboxAsPloygon
+	     * @function deriveBboxAsPolygon
 	     * @memberof whosonfirst.geojson
-	     * @description ...
-	     * @param {Object} feature - The Who's On First record to query.
-	     * @returns {Object}
+	     * @description Derive the bounding box for a Who's On First GeoJSON Feature record and return it as a GeoJSON Polygon geometry.
+	     * @param {Object} feature - The Who's On First GeoJSON Feature record to query.
+	     * @returns {Object} - Returns a GeoJSON Polygon geometry.
 	     */		    	    
 	    deriveBboxAsPolygon: function(feature){
 
@@ -77,9 +77,9 @@ whosonfirst.geojson = (function(){
 	    /**
 	     * @function deriveBbox
 	     * @memberof whosonfirst.geojson
-	     * @description ...
-	     * @param {Object} feature - The Who's On First record to query.
-	     * @returns {Object}.
+	     * @description Derive the bounding box for a Who's On First GeoJSON Feature record and return it as an array of minx, miny, maxx, maxy coordinates.
+	     * @param {Object} feature - The Who's On First GeoJSON Feature record to query.
+	     * @returns {Object} - Returns an array of minx, miny, maxx, maxy coordinates.
 	     */		    	    
 	    deriveBbox: function(feature){
 		
