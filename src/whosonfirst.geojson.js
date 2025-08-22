@@ -189,7 +189,7 @@ whosonfirst.geojson = (function(){
 
 	    derive_bbox_as_bounds: function(feature){
 		console.warn("derive_bbox_as_bounds is deprecated, use deriveBboxAsBounds instead.");
-		return self.deriveBboxAsFeature(feature);		
+		return self.deriveBboxAsBounds(feature);		
 	    },
 
 	    derive_bbox_as_polygon: function(feature){
